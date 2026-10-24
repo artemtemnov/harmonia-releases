@@ -1,8 +1,29 @@
 <!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Harmonia</title>
-<style>:root{color-scheme:dark}body{margin:0;background:#0d0e10;color:#e9e6df;font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,sans-serif}main{max-width:680px;margin:0 auto;padding:64px 20px 96px}h1{font-size:30px;line-height:1.2;margin:0 0 8px;letter-spacing:-.01em}h2{font-size:18px;margin:36px 0 8px}p,li{color:#b9b5ac}a{color:#e9e6df}nav{display:flex;gap:18px;margin-bottom:48px;font-size:14px}nav a{color:#8d897f;text-decoration:none}nav a:hover{color:#e9e6df}.en{margin-top:56px;padding-top:24px;border-top:1px solid #26272c}small{color:#78766f}</style></head><body><main>
+<style>:root{color-scheme:dark}body{margin:0;background:#0d0e10;color:#e9e6df;font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,sans-serif}main{max-width:680px;margin:0 auto;padding:64px 20px 96px}h1{font-size:30px;line-height:1.2;margin:0 0 8px;letter-spacing:-.01em}h2{font-size:18px;margin:36px 0 8px}p,li{color:#b9b5ac}a{color:#e9e6df}nav{display:flex;gap:18px;margin-bottom:48px;font-size:14px}nav a{color:#8d897f;text-decoration:none}nav a:hover{color:#e9e6df}.en{margin-top:56px;padding-top:24px;border-top:1px solid #26272c}small{color:#78766f}
+.get{margin:32px 0 12px;display:flex;flex-wrap:wrap;gap:12px;align-items:center}.btn{display:inline-block;background:#e9e6df;color:#0d0e10;text-decoration:none;font-weight:600;padding:13px 22px;border-radius:12px}.btn:hover{background:#fff}.alt{display:flex;flex-wrap:wrap;gap:18px;font-size:14px}.alt a{color:#8d897f}.alt a:hover{color:#e9e6df}details{margin-top:28px;border-top:1px solid #26272c;padding-top:16px}summary{cursor:pointer;color:#e9e6df}</style></head><body><main>
 <nav><a href="./">Harmonia</a><a href="privacy.html">Конфиденциальность</a><a href="terms.html">Условия</a></nav><h1>Harmonia</h1>
-<p>Личная доска для мыслей, планов и вдохновения: картинки, заметки, документы, задачи и связи между ними на одном спокойном холсте. Работает в браузере и как приложение для macOS и Windows, синхронизирует доски между устройствами через бесплатный аккаунт.</p>
-<p>Сейчас идёт закрытое тестирование, приложение бесплатное.</p>
-<p>Вопросы: <a href="mailto:xaxat99@gmail.com">xaxat99@gmail.com</a></p>
-<div class="en"><h2>In English</h2><p>Harmonia is a personal visual board for thoughts, plans and inspiration: images, notes, documents, tasks and links between them on one calm canvas. It runs in the browser and as a macOS and Windows app and syncs boards across devices through a free account. Currently in closed testing and free of charge. Contact: <a href="mailto:xaxat99@gmail.com">xaxat99@gmail.com</a>.</p></div>
-</main></body></html>
+<p>Личная доска для мыслей, планов и вдохновения: картинки, заметки, документы, задачи и связи между ними на одном спокойном холсте. Доски синхронизируются между устройствами через бесплатный аккаунт.</p>
+<div class="get"><a class="btn" id="main" href="https://github.com/artemtemnov/harmonia-releases/releases/latest">Скачать Harmonia</a><small id="ver"></small></div>
+<div class="alt"><a id="mac" href="https://github.com/artemtemnov/harmonia-releases/releases/latest">Mac (Apple Silicon)</a><a id="intel" href="https://github.com/artemtemnov/harmonia-releases/releases/latest">Mac с процессором Intel</a><a id="win" href="https://github.com/artemtemnov/harmonia-releases/releases/latest">Windows</a></div>
+<details><summary>Первый запуск</summary>
+<p><b>Mac.</b> Откройте скачанный файл и перетащите Harmonia в «Программы». При первом запуске macOS предупредит, что не может проверить разработчика: у приложения пока нет платной подписи Apple. Откройте «Системные настройки → Конфиденциальность и безопасность», прокрутите вниз и нажмите «Всё равно открыть». Это нужно один раз. Какой у вас Mac, видно в меню Apple → «Об этом Mac»: строка «Чип» или «Процессор».</p>
+<p><b>Windows.</b> Если появится окно «Windows защитила компьютер», нажмите «Подробнее», затем «Выполнить в любом случае».</p>
+</details>
+<p style="margin-top:28px">Сейчас идёт закрытое тестирование, приложение бесплатное. Вопросы: <a href="mailto:xaxat99@gmail.com">xaxat99@gmail.com</a></p>
+<div class="en"><h2>In English</h2><p>Harmonia is a personal visual board for thoughts, plans and inspiration: images, notes, documents, tasks and links between them on one calm canvas. It runs on macOS and Windows and syncs boards across devices through a free account. Currently in closed testing and free of charge. Contact: <a href="mailto:xaxat99@gmail.com">xaxat99@gmail.com</a>.</p></div>
+</main>
+<script>
+// Links point at the files of the newest release; without the API the buttons still open the release page.
+const win=/Windows/i.test(navigator.userAgent)
+fetch('https://api.github.com/repos/artemtemnov/harmonia-releases/releases/latest').then(r=>r.ok?r.json():Promise.reject()).then(rel=>{
+ const file=end=>rel.assets.find(a=>a.name.endsWith(end))?.browser_download_url
+ const mac=file('-mac-arm64.dmg'),intel=file('-mac-x64.dmg'),exe=file('-win-x64.exe')
+ if(mac)document.getElementById('mac').href=mac
+ if(intel)document.getElementById('intel').href=intel
+ if(exe)document.getElementById('win').href=exe
+ const main=document.getElementById('main'),pick=win?exe:mac
+ if(pick){main.href=pick;main.textContent=win?'Скачать для Windows':'Скачать для Mac'}
+ document.getElementById('ver').textContent='Версия '+rel.tag_name.replace(/^v/,'')
+}).catch(()=>{})
+</script>
+</body></html>
